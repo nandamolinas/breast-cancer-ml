@@ -1,0 +1,30 @@
+{
+  "modelo": "KNN",
+  "hiperparametros": {
+    "n_neighbors": 21,
+    "p": 1,
+    "weights": "uniform"
+  },
+  "acuracia_cv_treino": 0.7634,
+  "acuracia_teste_holdout": 0.6724,
+  "acuracia_baseline_zeror": 0.702,
+  "classes": {
+    "0": "no-recurrence-events",
+    "1": "recurrence-events"
+  },
+  "atributos": [
+    "age",
+    "menopause",
+    "tumor-size",
+    "inv-nodes",
+    "node-caps",
+    "deg-malig",
+    "breast",
+    "breast-quad",
+    "irradiat"
+  ],
+  "instancias_treino_final": 286,
+  "seed": 42,
+  "sklearn": "1.9.1",
+  "treinado_em": "2026-11-19T00:28:19"
+}

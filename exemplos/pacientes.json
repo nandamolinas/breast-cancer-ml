@@ -1,0 +1,8 @@
+[
+  {"age": "40-49", "menopause": "premeno", "tumor-size": "30-34", "inv-nodes": "6-8",
+   "node-caps": "yes", "deg-malig": "3", "breast": "left", "breast-quad": "left_low", "irradiat": "yes"},
+  {"age": "60-69", "menopause": "ge40", "tumor-size": "10-14", "inv-nodes": "0-2",
+   "node-caps": "no", "deg-malig": "1", "breast": "right", "breast-quad": "left_up", "irradiat": "no"},
+  {"age": "50-59", "menopause": "ge40", "tumor-size": "25-29", "inv-nodes": "0-2",
+   "node-caps": "?", "deg-malig": "2", "breast": "left", "breast-quad": "central", "irradiat": "no"}
+]

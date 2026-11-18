@@ -1,0 +1,11 @@
+modelo,acuracia_cv,desvio,params
+KNN,0.7634387351778656,0.04990043569010615,"{'n_neighbors': 21, 'p': 1, 'weights': 'uniform'}"
+Random Forest,0.7562582345191041,0.05332876997771743,"{'max_depth': 3, 'max_features': 'sqrt', 'min_samples_leaf': 10, 'n_estimators': 300}"
+Rede Neural (MLP),0.7561923583662715,0.055826648452597216,"{'alpha': 1.0, 'hidden_layer_sizes': (20,)}"
+Árvore de Decisão,0.7533596837944664,0.06788453645491621,"{'criterion': 'entropy', 'max_depth': 2, 'min_samples_leaf': 1}"
+Gradient Boosting,0.7445981554677206,0.06465941556154811,"{'learning_rate': 0.01, 'max_depth': 1, 'n_estimators': 200}"
+SVM,0.7402503293807642,0.06518481106860818,"{'C': 10, 'gamma': 0.01, 'kernel': 'rbf'}"
+AdaBoost,0.7401844532279314,0.061537777202471895,"{'learning_rate': 0.05, 'n_estimators': 100}"
+Regressão Logística,0.737022397891963,0.02823590545105328,"{'C': 0.01, 'class_weight': None}"
+Naive Bayes,0.7283926218708828,0.07586750916946301,{'var_smoothing': 1.0}
+ZeroR (baseline),0.7019762845849802,0.012648221343873533,{}

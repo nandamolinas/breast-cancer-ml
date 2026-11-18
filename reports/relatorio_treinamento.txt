@@ -1,0 +1,96 @@
+======================================================================
+1. ANÁLISE EXPLORATÓRIA
+======================================================================
+Instâncias: 286 | Atributos: 9 + alvo 'Class'
+
+Distribuição da classe:
+  no-recurrence-events    201  (70.3%)
+  recurrence-events        85  (29.7%)
+
+Valores ausentes ('?') por atributo:
+  node-caps    8
+  breast-quad  1
+
+Taxa de recorrência por atributo (proporção de 'recurrence-events'):
+  age          20-29=0%(n=1), 30-39=42%(n=36), 40-49=30%(n=90), 50-59=26%(n=96), 60-69=30%(n=57), 70-79=17%(n=6)
+  menopause    ge40=27%(n=129), lt40=29%(n=7), premeno=32%(n=150)
+  tumor-size   0-4=12%(n=8), 10-14=4%(n=28), 15-19=23%(n=30), 20-24=32%(n=50), 25-29=33%(n=54), 30-34=42%(n=60), 35-39=37%(n=19), 40-44=27%(n=22), 45-49=33%(n=3), 5-9=0%(n=4), 50-54=38%(n=8)
+  inv-nodes    0-2=22%(n=213), 12-14=67%(n=3), 15-17=50%(n=6), 24-26=100%(n=1), 3-5=47%(n=36), 6-8=59%(n=17), 9-11=60%(n=10)
+  node-caps    no=23%(n=222), yes=55%(n=56)
+  deg-malig    1=17%(n=71), 2=22%(n=130), 3=53%(n=85)
+  breast       left=32%(n=152), right=27%(n=134)
+  breast-quad  central=19%(n=21), left_low=32%(n=110), left_up=27%(n=97), right_low=25%(n=24), right_up=39%(n=33)
+  irradiat     no=25%(n=218), yes=46%(n=68)
+
+======================================================================
+2. DIVISÃO TREINO/TESTE (estratificada)
+======================================================================
+Treino: 228  |  Teste: 58  (recorrência: 29.8% treino, 29.3% teste)
+
+======================================================================
+3. COMPARAÇÃO DOS CLASSIFICADORES (padrão) — CV 10 folds x 3 repetições
+======================================================================
+             modelo  acuracia  desvio     f1  recall    auc
+                KNN    0.7341  0.0680 0.4565  0.3873 0.6944
+                SVM    0.7300  0.0671 0.3042  0.2167 0.7100
+  Rede Neural (MLP)    0.7175  0.0993 0.4738  0.4175 0.7037
+Regressão Logística    0.7139  0.0734 0.4013  0.3317 0.7050
+           AdaBoost    0.7124  0.0889 0.4461  0.3944 0.6945
+  Gradient Boosting    0.7034  0.0801 0.4539  0.4119 0.6635
+   ZeroR (baseline)    0.7020  0.0126 0.0000  0.0000 0.5000
+      Random Forest    0.6975  0.0869 0.4255  0.3865 0.6822
+        Naive Bayes    0.6943  0.0669 0.4641  0.4460 0.6867
+  Árvore de Decisão    0.6410  0.0919 0.4326  0.4643 0.5873
+
+======================================================================
+4. AJUSTE DE HIPERPARÂMETROS (GridSearchCV, métrica = acurácia)
+======================================================================
+ZeroR (baseline)       acc CV = 0.7020 ± 0.0126  {}
+Naive Bayes            acc CV = 0.7284 ± 0.0759  {'var_smoothing': 1.0}
+KNN                    acc CV = 0.7634 ± 0.0499  {'n_neighbors': 21, 'p': 1, 'weights': 'uniform'}
+Árvore de Decisão      acc CV = 0.7534 ± 0.0679  {'criterion': 'entropy', 'max_depth': 2, 'min_samples_leaf': 1}
+Regressão Logística    acc CV = 0.7370 ± 0.0282  {'C': 0.01, 'class_weight': None}
+SVM                    acc CV = 0.7403 ± 0.0652  {'C': 10, 'gamma': 0.01, 'kernel': 'rbf'}
+Random Forest          acc CV = 0.7563 ± 0.0533  {'max_depth': 3, 'max_features': 'sqrt', 'min_samples_leaf': 10, 'n_estimators': 300}
+Gradient Boosting      acc CV = 0.7446 ± 0.0647  {'learning_rate': 0.01, 'max_depth': 1, 'n_estimators': 200}
+AdaBoost               acc CV = 0.7402 ± 0.0615  {'learning_rate': 0.05, 'n_estimators': 100}
+Rede Neural (MLP)      acc CV = 0.7562 ± 0.0558  {'alpha': 1.0, 'hidden_layer_sizes': (20,)}
+
+======================================================================
+5. MODELO ESCOLHIDO E AVALIAÇÃO NO CONJUNTO DE TESTE
+======================================================================
+Melhor acurácia na validação cruzada: KNN (0.7634) | baseline ZeroR: 0.7020
+Hiperparâmetros: {'n_neighbors': 21, 'p': 1, 'weights': 'uniform'}
+
+Acurácia no teste (todos os modelos ajustados):
+             modelo  acuracia_cv  acuracia_teste
+                KNN       0.7634          0.6724
+      Random Forest       0.7563          0.7241
+  Rede Neural (MLP)       0.7562          0.6897
+  Árvore de Decisão       0.7534          0.7414
+  Gradient Boosting       0.7446          0.7414
+                SVM       0.7403          0.6724
+           AdaBoost       0.7402          0.7586
+Regressão Logística       0.7370          0.7069
+        Naive Bayes       0.7284          0.7069
+   ZeroR (baseline)       0.7020          0.7069
+
+>>> KNN — acurácia no teste: 0.6724
+F1 (recorrência): 0.0952 | Recall (recorrência): 0.0588 | AUC: 0.6141
+
+Matriz de confusão (linhas = real, colunas = previsto) [sem recorrência, recorrência]:
+[[38  3]
+ [16  1]]
+
+                      precision    recall  f1-score   support
+
+no-recurrence-events     0.7037    0.9268    0.8000        41
+   recurrence-events     0.2500    0.0588    0.0952        17
+
+            accuracy                         0.6724        58
+           macro avg     0.4769    0.4928    0.4476        58
+        weighted avg     0.5707    0.6724    0.5934        58
+
+
+======================================================================
+Modelo final (KNN) retreinado com 286 instâncias e salvo em models/modelo_final.joblib  [331s]
